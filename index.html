@@ -9,7 +9,6 @@
 <style>
 :root{
     --primary:#004a8c;
-    --accent:#f39c12;
     --bg:#f0f2f5;
 }
 
@@ -23,90 +22,80 @@ body{
 header{
     background:var(--primary);
     color:white;
-    padding:30px;
+    padding:25px;
     text-align:center;
-    border-bottom-left-radius:25px;
-    border-bottom-right-radius:25px;
 }
 
-/* SECCIÓN */
-.section{
-    padding:15px;
+/* GRID 6 TARJETAS */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+    padding:10px;
 }
 
-/* SCROLL */
-.scroll{
-    display:flex;
-    gap:10px;
-    overflow-x:auto;
-}
-
-.scroll::-webkit-scrollbar{display:none}
-
-/* CARD FULL WIDTH */
 .card{
-    min-width:80%;
-    height:160px;
-    border-radius:20px;
+    border-radius:10px;
     overflow:hidden;
-    position:relative;
     cursor:pointer;
 }
 
 .card img{
     width:100%;
-    height:100%;
+    height:80px;
     object-fit:cover;
-}
-
-.card span{
-    position:absolute;
-    bottom:10px;
-    left:10px;
-    color:white;
-    font-weight:bold;
-    font-size:18px;
 }
 
 /* DETALLE */
 #detalle{
     display:none;
-    background:white;
-    border-radius:20px;
-    margin:15px;
-    padding:15px;
+    padding:10px;
 }
 
-#mainImg{
+.main-img{
     width:100%;
+    height:250px;
+    object-fit:cover;
     border-radius:15px;
 }
+
+/* FLECHAS */
+.nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:30px;
+    color:white;
+    cursor:pointer;
+}
+
+.left{left:10px}
+.right{right:10px}
 
 /* GALERÍA */
 .galeria{
     display:flex;
     overflow-x:auto;
-    gap:10px;
+    gap:8px;
     margin-top:10px;
 }
 
 .galeria img{
-    width:120px;
-    height:80px;
-    border-radius:10px;
-    object-fit:cover;
+    width:70px;
+    height:50px;
+    border-radius:8px;
+    cursor:pointer;
 }
 
 /* BOTONES */
 .btn{
-    display:block;
     background:var(--primary);
     color:white;
-    padding:12px;
-    border-radius:15px;
-    text-align:center;
+    padding:10px;
+    border:none;
+    border-radius:10px;
     margin-top:10px;
-    text-decoration:none;
+    width:100%;
 }
 
 /* PLAYER */
@@ -117,7 +106,6 @@ header{
     right:0;
     background:white;
     padding:10px;
-    border-top:4px solid var(--primary);
     display:none;
 }
 </style>
@@ -127,96 +115,125 @@ header{
 
 <header>
 <h1>Río Turbio</h1>
-<p>Turismo Inteligente</p>
 </header>
 
-<div class="section">
+<!-- GRID -->
+<div id="menu" class="grid">
 
-<h2>Lugares</h2>
-
-<div class="scroll">
-
-<div class="card" onclick="verLugar(this,'Monumento al Minero','Historia del minero','mineros.m4a','https://maps.google.com')">
+<div class="card" onclick="abrir(this)">
 <img src="https://i.ibb.co/21ky25s2/Sin-monumento-minero.png">
-<span>Monumento Minero</span>
 </div>
 
-<div class="card" onclick="verLugar(this,'Bosque de Duendes','Lugar mágico','','https://maps.google.com')">
+<div class="card" onclick="abrir(this)">
 <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e">
-<span>Bosque Duendes</span>
 </div>
 
+<div class="card" onclick="abrir(this)">
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
+</div>
+
+<div class="card" onclick="abrir(this)">
+<img src="https://images.unsplash.com/photo-1519681393784-d120267933ba">
+</div>
+
+<div class="card" onclick="abrir(this)">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+</div>
+
+<div class="card" onclick="abrir(this)">
+<img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766">
 </div>
 
 </div>
 
 <!-- DETALLE -->
 <div id="detalle">
-<img id="mainImg">
 
-<h2 id="titulo"></h2>
-<p id="desc"></p>
+<button class="btn" onclick="volver()">⬅ Volver</button>
 
-<a id="mapa" class="btn" target="_blank">📍 Cómo llegar</a>
+<div style="position:relative">
 
-<button class="btn" onclick="reproducir()">🔊 Escuchar audio</button>
+<img id="main" class="main-img">
+
+<div class="nav left" onclick="cambiar(-1)">❮</div>
+<div class="nav right" onclick="cambiar(1)">❯</div>
+
+</div>
 
 <div class="galeria" id="galeria"></div>
+
+<button class="btn" onclick="audioPlay()">🔊 Escuchar</button>
 
 </div>
 
 <!-- PLAYER -->
 <div class="player" id="playerBox">
-<audio id="audio" style="width:100%"></audio>
+<audio id="audio" controls style="width:100%"></audio>
 </div>
 
 <script>
-let audioURL="";
+let imagenes=[];
+let index=0;
 
-function verLugar(el,titulo,desc,audio,mapa){
+function abrir(el){
 
+    document.getElementById("menu").style.display="none";
     document.getElementById("detalle").style.display="block";
 
-    const img = el.querySelector("img").src;
+    let img = el.querySelector("img").src;
 
-    document.getElementById("mainImg").src = img;
-    document.getElementById("titulo").innerText = titulo;
-    document.getElementById("desc").innerText = desc;
-    document.getElementById("mapa").href = mapa;
-
-    audioURL = audio;
-
-    /* GALERÍA AUTOMÁTICA */
-    const galeria = document.getElementById("galeria");
-    galeria.innerHTML = "";
+    imagenes=[];
 
     for(let i=0;i<10;i++){
-        let foto = document.createElement("img");
-        foto.src = img;
-        galeria.appendChild(foto);
+        imagenes.push(img);
     }
 
-    window.scrollTo({top:300,behavior:"smooth"});
+    index=0;
+    actualizar();
+
+    let galeria = document.getElementById("galeria");
+    galeria.innerHTML="";
+
+    imagenes.forEach((src,i)=>{
+        let mini=document.createElement("img");
+        mini.src=src;
+        mini.onclick=()=>{
+            index=i;
+            actualizar();
+        };
+        galeria.appendChild(mini);
+    });
 }
 
-function reproducir(){
+function actualizar(){
+    document.getElementById("main").src=imagenes[index];
+}
 
-    if(!audioURL){
-        alert("Audio no disponible");
-        return;
-    }
+function cambiar(dir){
+    index+=dir;
+    if(index<0) index=imagenes.length-1;
+    if(index>=imagenes.length) index=0;
+    actualizar();
+}
 
-    const player = document.getElementById("audio");
-    const box = document.getElementById("playerBox");
+function volver(){
+    document.getElementById("menu").style.display="grid";
+    document.getElementById("detalle").style.display="none";
+}
 
-    player.src = audioURL;
+/* AUDIO */
+function audioPlay(){
+
+    let player=document.getElementById("audio");
+    let box=document.getElementById("playerBox");
+
+    player.src="mineros.m4a";
 
     box.style.display="block";
 
     player.play();
 
-    /* OCULTAR CUANDO TERMINA */
-    player.onended = () => {
+    player.onended=()=>{
         box.style.display="none";
         player.src="";
     };
