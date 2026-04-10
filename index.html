@@ -3,110 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Río Turbio Turismo</title>
 
 <style>
 :root{
     --primary:#004a8c;
+    --accent:#f39c12;
     --bg:#f0f2f5;
 }
 
 body{
     margin:0;
-    font-family: Arial;
+    font-family: 'Segoe UI', sans-serif;
     background:var(--bg);
 }
 
-/* HEADER */
+/* HEADER INSTITUCIONAL */
 header{
-    background:var(--primary);
+    background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1501785888041-af3ef285b470');
+    background-size:cover;
+    background-position:center;
     color:white;
-    padding:25px;
     text-align:center;
+    padding:60px 20px;
 }
 
-/* GRID 6 TARJETAS */
-.grid{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:8px;
-    padding:10px;
+header h1{
+    margin:0;
+    font-size:2rem;
+    letter-spacing:1px;
 }
 
+header p{
+    margin-top:10px;
+    font-size:1rem;
+    opacity:0.9;
+}
+
+/* SECCIONES */
+.section{
+    padding:20px 15px;
+}
+
+.section h2{
+    margin:0 0 10px;
+    font-size:1.2rem;
+    color:var(--primary);
+    border-left:5px solid var(--accent);
+    padding-left:10px;
+}
+
+/* SCROLL HORIZONTAL */
+.scroll{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+}
+
+.scroll::-webkit-scrollbar{display:none}
+
+/* TARJETAS */
 .card{
-    border-radius:10px;
+    min-width:140px;
+    background:white;
+    border-radius:15px;
     overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
     cursor:pointer;
 }
 
 .card img{
     width:100%;
-    height:80px;
+    height:100px;
     object-fit:cover;
 }
 
-/* DETALLE */
-#detalle{
-    display:none;
-    padding:10px;
+.card p{
+    font-size:0.8rem;
+    text-align:center;
+    padding:8px;
+    margin:0;
 }
 
-.main-img{
-    width:100%;
-    height:250px;
-    object-fit:cover;
-    border-radius:15px;
+/* GRID FINAL */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
 }
 
-/* FLECHAS */
-.nav{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:30px;
-    color:white;
-    cursor:pointer;
-}
-
-.left{left:10px}
-.right{right:10px}
-
-/* GALERÍA */
-.galeria{
-    display:flex;
-    overflow-x:auto;
-    gap:8px;
-    margin-top:10px;
-}
-
-.galeria img{
-    width:70px;
-    height:50px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-/* BOTONES */
-.btn{
-    background:var(--primary);
-    color:white;
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    margin-top:10px;
-    width:100%;
-}
-
-/* PLAYER */
-.player{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
+.box{
     background:white;
-    padding:10px;
-    display:none;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    font-weight:bold;
 }
 </style>
 </head>
@@ -115,130 +108,52 @@ header{
 
 <header>
 <h1>Río Turbio</h1>
+<p>Guía Turística Inteligente</p>
 </header>
 
-<!-- GRID -->
-<div id="menu" class="grid">
+<!-- 1️⃣ LUGARES -->
+<div class="section">
+<h2>📍 Lugares que debes conocer</h2>
 
-<div class="card" onclick="abrir(this)">
-<img src="https://i.ibb.co/21ky25s2/Sin-monumento-minero.png">
-</div>
+<div class="scroll">
 
-<div class="card" onclick="abrir(this)">
-<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e">
-</div>
-
-<div class="card" onclick="abrir(this)">
-<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
-</div>
-
-<div class="card" onclick="abrir(this)">
-<img src="https://images.unsplash.com/photo-1519681393784-d120267933ba">
-</div>
-
-<div class="card" onclick="abrir(this)">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-</div>
-
-<div class="card" onclick="abrir(this)">
-<img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766">
-</div>
+<div class="card"><img src="https://i.ibb.co/21ky25s2/Sin-monumento-minero.png"><p>Monumento Minero</p></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e"><p>Bosque de Duendes</p></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470"><p>Dique San José</p></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba"><p>Valdelén</p></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"><p>Mirador</p></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766"><p>Mina 1</p></div>
 
 </div>
-
-<!-- DETALLE -->
-<div id="detalle">
-
-<button class="btn" onclick="volver()">⬅ Volver</button>
-
-<div style="position:relative">
-
-<img id="main" class="main-img">
-
-<div class="nav left" onclick="cambiar(-1)">❮</div>
-<div class="nav right" onclick="cambiar(1)">❯</div>
-
 </div>
 
-<div class="galeria" id="galeria"></div>
+<!-- 2️⃣ EVENTOS -->
+<div class="section">
+<h2>🎉 Eventos importantes</h2>
 
-<button class="btn" onclick="audioPlay()">🔊 Escuchar</button>
+<div class="scroll">
+
+<div class="card"><img src="https://images.unsplash.com/photo-1503428593586-e225b39bddfe"><p>Fiesta del Carbón</p></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff"><p>Festival Invernal</p></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"><p>Eventos culturales</p></div>
+
+</div>
+</div>
+
+<!-- 3️⃣ SERVICIOS -->
+<div class="section">
+<h2>🛎️ Servicios y experiencias</h2>
+
+<div class="grid">
+
+<div class="box">🏨 Hotelería</div>
+<div class="box">🍴 Gastronomía</div>
+<div class="box">🛍️ Productos regionales</div>
+<div class="box">🎿 Servicios turísticos</div>
 
 </div>
 
-<!-- PLAYER -->
-<div class="player" id="playerBox">
-<audio id="audio" controls style="width:100%"></audio>
 </div>
-
-<script>
-let imagenes=[];
-let index=0;
-
-function abrir(el){
-
-    document.getElementById("menu").style.display="none";
-    document.getElementById("detalle").style.display="block";
-
-    let img = el.querySelector("img").src;
-
-    imagenes=[];
-
-    for(let i=0;i<10;i++){
-        imagenes.push(img);
-    }
-
-    index=0;
-    actualizar();
-
-    let galeria = document.getElementById("galeria");
-    galeria.innerHTML="";
-
-    imagenes.forEach((src,i)=>{
-        let mini=document.createElement("img");
-        mini.src=src;
-        mini.onclick=()=>{
-            index=i;
-            actualizar();
-        };
-        galeria.appendChild(mini);
-    });
-}
-
-function actualizar(){
-    document.getElementById("main").src=imagenes[index];
-}
-
-function cambiar(dir){
-    index+=dir;
-    if(index<0) index=imagenes.length-1;
-    if(index>=imagenes.length) index=0;
-    actualizar();
-}
-
-function volver(){
-    document.getElementById("menu").style.display="grid";
-    document.getElementById("detalle").style.display="none";
-}
-
-/* AUDIO */
-function audioPlay(){
-
-    let player=document.getElementById("audio");
-    let box=document.getElementById("playerBox");
-
-    player.src="mineros.m4a";
-
-    box.style.display="block";
-
-    player.play();
-
-    player.onended=()=>{
-        box.style.display="none";
-        player.src="";
-    };
-}
-</script>
 
 </body>
 </html>
