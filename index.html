@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Río Turbio Turismo</title>
 
 <style>
@@ -16,9 +17,211 @@ body{
     margin:0;
     font-family: Arial;
     background:var(--bg);
-    padding-bottom:120px;
 }
 
 /* HEADER */
 header{
-    background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,
+    background:var(--primary);
+    color:white;
+    padding:30px;
+    text-align:center;
+    border-bottom-left-radius:25px;
+    border-bottom-right-radius:25px;
+}
+
+/* SECCIÓN */
+.section{
+    padding:15px;
+}
+
+/* SCROLL */
+.scroll{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+}
+
+.scroll::-webkit-scrollbar{display:none}
+
+/* CARD FULL WIDTH */
+.card{
+    min-width:80%;
+    height:160px;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+}
+
+.card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.card span{
+    position:absolute;
+    bottom:10px;
+    left:10px;
+    color:white;
+    font-weight:bold;
+    font-size:18px;
+}
+
+/* DETALLE */
+#detalle{
+    display:none;
+    background:white;
+    border-radius:20px;
+    margin:15px;
+    padding:15px;
+}
+
+#mainImg{
+    width:100%;
+    border-radius:15px;
+}
+
+/* GALERÍA */
+.galeria{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    margin-top:10px;
+}
+
+.galeria img{
+    width:120px;
+    height:80px;
+    border-radius:10px;
+    object-fit:cover;
+}
+
+/* BOTONES */
+.btn{
+    display:block;
+    background:var(--primary);
+    color:white;
+    padding:12px;
+    border-radius:15px;
+    text-align:center;
+    margin-top:10px;
+    text-decoration:none;
+}
+
+/* PLAYER */
+.player{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:white;
+    padding:10px;
+    border-top:4px solid var(--primary);
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Río Turbio</h1>
+<p>Turismo Inteligente</p>
+</header>
+
+<div class="section">
+
+<h2>Lugares</h2>
+
+<div class="scroll">
+
+<div class="card" onclick="verLugar(this,'Monumento al Minero','Historia del minero','mineros.m4a','https://maps.google.com')">
+<img src="https://i.ibb.co/21ky25s2/Sin-monumento-minero.png">
+<span>Monumento Minero</span>
+</div>
+
+<div class="card" onclick="verLugar(this,'Bosque de Duendes','Lugar mágico','','https://maps.google.com')">
+<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e">
+<span>Bosque Duendes</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- DETALLE -->
+<div id="detalle">
+<img id="mainImg">
+
+<h2 id="titulo"></h2>
+<p id="desc"></p>
+
+<a id="mapa" class="btn" target="_blank">📍 Cómo llegar</a>
+
+<button class="btn" onclick="reproducir()">🔊 Escuchar audio</button>
+
+<div class="galeria" id="galeria"></div>
+
+</div>
+
+<!-- PLAYER -->
+<div class="player" id="playerBox">
+<audio id="audio" style="width:100%"></audio>
+</div>
+
+<script>
+let audioURL="";
+
+function verLugar(el,titulo,desc,audio,mapa){
+
+    document.getElementById("detalle").style.display="block";
+
+    const img = el.querySelector("img").src;
+
+    document.getElementById("mainImg").src = img;
+    document.getElementById("titulo").innerText = titulo;
+    document.getElementById("desc").innerText = desc;
+    document.getElementById("mapa").href = mapa;
+
+    audioURL = audio;
+
+    /* GALERÍA AUTOMÁTICA */
+    const galeria = document.getElementById("galeria");
+    galeria.innerHTML = "";
+
+    for(let i=0;i<10;i++){
+        let foto = document.createElement("img");
+        foto.src = img;
+        galeria.appendChild(foto);
+    }
+
+    window.scrollTo({top:300,behavior:"smooth"});
+}
+
+function reproducir(){
+
+    if(!audioURL){
+        alert("Audio no disponible");
+        return;
+    }
+
+    const player = document.getElementById("audio");
+    const box = document.getElementById("playerBox");
+
+    player.src = audioURL;
+
+    box.style.display="block";
+
+    player.play();
+
+    /* OCULTAR CUANDO TERMINA */
+    player.onended = () => {
+        box.style.display="none";
+        player.src="";
+    };
+}
+</script>
+
+</body>
+</html>
